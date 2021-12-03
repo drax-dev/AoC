@@ -1,1 +1,3 @@
-# AoC_day_1
+# AoC:
+- day_01
+- day_02
