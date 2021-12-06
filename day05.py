@@ -28,6 +28,28 @@ class Board:
             if self.board[origin.x + i][origin.y] == 2:
                 self.sum += 1
 
+    def fill_diagonal(self, origin, end, length):
+        if origin.x < end.x and origin.y < end.y:
+            for i in range(length + 1):
+                self.board[origin.x + i][origin.y + i] += 1
+                if self.board[origin.x + i][origin.y + i] == 2:
+                    self.sum += 1
+        elif origin.x > end.x and origin.y > end.y:
+            for i in range(length + 1):
+                self.board[origin.x - i][origin.y - i] += 1
+                if self.board[origin.x - i][origin.y - i] == 2:
+                    self.sum += 1
+        elif origin.x > end.x and origin.y < end.y:
+            for i in range(length + 1):
+                self.board[origin.x - i][origin.y + i] += 1
+                if self.board[origin.x - i][origin.y + i] == 2:
+                    self.sum += 1
+        elif origin.x < end.x and origin.y > end.y:
+            for i in range(length + 1):
+                self.board[origin.x + i][origin.y - i] += 1
+                if self.board[origin.x + i][origin.y - i] == 2:
+                    self.sum += 1
+
 
 class Coordinates:
     def __init__(self, x, y):
@@ -71,11 +93,15 @@ def fill_board(board_instance, coordinates_dict):
                 board_instance.fill_horizontal(origin, absolute_diff)
             else:
                 board_instance.fill_horizontal(end, absolute_diff)
+        elif abs(end.y - origin.y) == abs(end.x - origin.x):
+            absolute_diff = abs(end.y - origin.y)
+            board_instance.fill_diagonal(origin, end, absolute_diff)
 
 
 if __name__ == '__main__':
     origins_and_ends, max_size = load_input("input_day05")
     board = Board(max_size + 1, max_size + 1)
     fill_board(board, origins_and_ends)
+    # print(board)
     print(board.sum)
 
