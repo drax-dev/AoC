@@ -16,8 +16,7 @@ def set_neighbours(input_list):
         for yy in range(size_y):
             for x2 in range(xx - 1, xx + 2):
                 for y2 in range(yy - 1, yy + 2):
-                    if -1 < xx < size_x and -1 < yy < size_y \
-                            and ((xx == x2 and yy != y2) or (xx != x2 and yy == y2)) \
+                    if ((xx == x2 and yy != y2) or (xx != x2 and yy == y2)) \
                             and (0 <= x2 < size_x) and (0 <= y2 < size_y):
                         input_list[xx][yy].neighbours.append(input_list[x2][y2])
             # for x2 in range(xx - 1, xx + 2):
@@ -97,23 +96,23 @@ def count_basins_for_neighbours(dict_of_visited_points, neighbour_list):
 
 
 if __name__ == '__main__':
+    # part 1
     input_data = load_input("input_day09")
     # input_data = load_input("input_day09_small")
-    # size_x = len(input_data)
-    # size_y = len(input_data[0])
     input_data = set_neighbours(input_data)
-    # result = find_low_points_for_part1(input_data)
+    results = find_low_points_for_part1(input_data)
+
+    final_result = 0
+    for val in results:
+        final_result += 1 + val
+    print(final_result)
+
+    #  part 2
+    input_data = load_input("input_day09")
+    # input_data = load_input("input_day09_small")
+    input_data = set_neighbours(input_data)
     results = find_low_points(input_data)
     basins_result = count_basins(results)
-    print(basins_result)
 
     three_largest_values = sorted(basins_result, reverse=True)[:3]
     print(three_largest_values[0] * three_largest_values[1] * three_largest_values[2])
-
-    # for point in results:
-    #     print(point)
-
-    # final_result = 0
-    # for val in results:
-    #     final_result += 1 + val
-    # print(final_result)
